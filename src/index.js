@@ -3,6 +3,25 @@ import React from 'react';
 const root = createRoot(document.querySelector('#root'));
 import { Provider, connect } from 'react-redux';
 import store, { fetchImages } from './store';
+import { HashRouter as Router, Link, Route } from 'react-router-dom';
+
+const Images = connect(
+  state => state
+)(({ images })=> {
+  return (
+    <ul>
+      {
+        images.map( image => {
+          return (
+            <li key= { image }>
+              { image.name }
+            </li>
+          );
+        })
+      }
+    </ul>
+  );
+});
 
 const App = connect(
   state => state,
@@ -21,8 +40,20 @@ const App = connect(
     }
   }
   render(){
-    return <hr />;
+    return (
+      <main>
+        <nav>
+          <Link to='/'>Home</Link>
+          <Link to='/images'>Images</Link>
+        </nav>
+        <Route to='/images' component={ Images }/>
+      </main>
+    );
   }
 });
 
-root.render(<Provider store={ store }><App /></Provider>);
+root.render(<Provider store={ store }>
+  <Router>
+    <App />
+  </Router>
+</Provider>);
