@@ -13,7 +13,7 @@ const Images = connect(
       {
         images.map( image => {
           return (
-            <li key= { image }>
+            <li key= { image.id }>
               { image.name }
             </li>
           );
